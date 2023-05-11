@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d62f85805cfbc6466241b74c93fe2ed6",
+    "content-hash": "590c4ab58332b792d04a34f5ae211f79",
     "packages": [
         {
             "name": "brick/math",
@@ -979,16 +979,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v10.10.0",
+            "version": "v10.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "0da22a8d179f79b49d4e71f4822f759651f35012"
+                "reference": "be0478dea96a6619bb77676f36f67c1500846b17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/0da22a8d179f79b49d4e71f4822f759651f35012",
-                "reference": "0da22a8d179f79b49d4e71f4822f759651f35012",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/be0478dea96a6619bb77676f36f67c1500846b17",
+                "reference": "be0478dea96a6619bb77676f36f67c1500846b17",
                 "shasum": ""
             },
             "require": {
@@ -1175,7 +1175,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-05-09T13:08:05+00:00"
+            "time": "2023-05-11T13:20:25+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -5460,6 +5460,59 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "your-app-rocks/eloquent-uuid",
+            "version": "2.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/YourAppRocks/eloquent-uuid.git",
+                "reference": "3f1740973fb7c2da4831eeaf35d156773620c70b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/YourAppRocks/eloquent-uuid/zipball/3f1740973fb7c2da4831eeaf35d156773620c70b",
+                "reference": "3f1740973fb7c2da4831eeaf35d156773620c70b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0",
+                "ramsey/uuid": "^3.9 || ^4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "orchestra/testbench": "^3.5 || ^4.0 || ^5.0 || ^6.0",
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "YourAppRocks\\EloquentUuid\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "João Roberto P. Borges",
+                    "email": "joaorobertopb@gmail.com"
+                }
+            ],
+            "description": "Adds support for UUID generation automatically for Models Eloquents.",
+            "homepage": "https://yourapp.rocks",
+            "keywords": [
+                "YourApp.Rocks",
+                "eloquent-uuid",
+                "universal unique id",
+                "uuid"
+            ],
+            "support": {
+                "issues": "https://github.com/YourAppRocks/eloquent-uuid/issues",
+                "source": "https://github.com/YourAppRocks/eloquent-uuid/tree/2.5.0"
+            },
+            "time": "2021-02-25T01:21:12+00:00"
         }
     ],
     "packages-dev": [
