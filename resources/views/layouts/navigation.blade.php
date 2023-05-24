@@ -12,9 +12,171 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('dashboard')" :active="false">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                </div>
+
+                <!-- Menu Vertical Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+
+                </div>
+
+                <!-- Settings Dropdown -->
+                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <ul>
+                        <li>
+                            <x-menu align="left" width="48">
+                                <x-slot name="trigger">
+                                    <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                        <div>Menu</div>
+
+                                        <div class="ml-1">
+                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </button>
+                                </x-slot>
+                                <x-slot name="content">
+                                    <ul>
+                                        <li class="relative">
+                                            <x-menu-submenu>
+                                                <x-slot name="trigger">
+                                                    <x-menu-link>
+                                                        {{ __('Requisição') }}
+                                                    </x-menu-link>
+                                                </x-slot>
+                                                <x-slot name="content">
+                                                <ul>
+                                                        <x-menu-link :href="route('requisicao.index')">
+                                                            {{ __('Buscar Requisição') }}
+                                                        </x-menu-link>
+                                                
+                                                
+                                                        <x-menu-link :href="route('requisicao.create')">
+                                                            {{ __('Nova Requisição') }}
+                                                        </x-menu-link>
+                                                </ul>
+                                                </x-slot>
+                                            </x-menu-submenu>
+                                        </li>
+                                        <li class="relative">
+                                            <x-menu-submenu>
+                                                <x-slot name="trigger">
+                                                    <x-menu-link>
+                                                        {{ __('Licitacao') }}
+                                                    </x-menu-link>
+                                                </x-slot>
+                                                <x-slot name="content">
+                                                    <ul>
+                                                        <x-menu-link :href="route('requisicao.index')">
+                                                            {{ __('Buscar Licitacão') }}
+                                                        </x-menu-link>
+                                                
+                                                
+                                                        <x-menu-link :href="route('requisicao.create')">
+                                                            {{ __('Nova Licitacão') }}
+                                                        </x-menu-link>
+                                                
+                                                        <x-menu-link :href="route('requisicao.create')">
+                                                            {{ __('Registro de Preços') }}
+                                                        </x-menu-link>
+                                                    </ul>
+                                                </x-slot>
+                                            </x-menu-submenu>
+                                        </li>
+                                        <li class="relative">
+                                            <x-menu-submenu>
+                                                <x-slot name="trigger">
+                                                    <x-menu-link>
+                                                        {{ __('Contratação Direta') }}
+                                                    </x-menu-link>
+                                                </x-slot>
+                                                <x-slot name="content">
+                                                <ul>
+                                                    <li>
+                                                        <x-menu-submenu>
+                                                            <x-slot name="trigger">
+                                                                <x-menu-link>
+                                                                    {{ __('Dispensa de Licitação') }}
+                                                                </x-menu-link>
+                                                            </x-slot>
+                                                            <x-slot name="content">
+                                                                <x-menu-link :href="route('requisicao.index')">
+                                                                    {{ __('Nova Dispensa') }}
+                                                                </x-menu-link>
+                                                            </x-slot>
+                                                        </x-menu-submenu>
+                                                    </li>
+                                                    <li>
+                                                        <x-menu-submenu>
+                                                            <x-slot name="trigger">
+                                                                <x-menu-link>
+                                                                    {{ __('Inexigibilidade') }}
+                                                                </x-menu-link>
+                                                            </x-slot>
+                                                            <x-slot name="content">
+                                                                <x-menu-link :href="route('requisicao.index')">
+                                                                    {{ __('Nova Inexigibilidade') }}
+                                                                </x-menu-link>
+                                                            </x-slot>
+                                                        </x-menu-submenu>
+                                                    </li>
+                                                </ul>
+                                                </x-slot>
+                                            </x-menu-submenu>
+                                        </li>
+                                        <li class="relative">
+                                            <x-menu-submenu>
+                                                <x-slot name="trigger">
+                                                    <x-menu-link>
+                                                        {{ __('Fornecedor') }}
+                                                    </x-menu-link>
+                                                </x-slot>
+                                                <x-slot name="content">
+                                                    <ul>
+                                                    <x-menu-link :href="route('requisicao.index')">
+                                                        {{ __('Buscar Fornecedor') }}
+                                                    </x-menu-link>
+                                            
+                                                    <x-menu-link :href="route('requisicao.create')">
+                                                        {{ __('Novo Fornecedor') }}
+                                                    </x-menu-link>
+                                                    </ul>
+                                                </x-slot>
+                                            </x-menu-submenu>
+                                        </li>
+                                        <li  class="relative">
+                                            <x-menu-submenu>
+                                                <x-slot name="trigger">
+                                                    <x-menu-link>
+                                                        {{ __('Contratação') }}
+                                                    </x-menu-link>
+                                                </x-slot>
+                                                <x-slot name="content">
+                                                    <ul>
+                                                    <x-menu-link :href="route('requisicao.index')">
+                                                        {{ __('Buscar Fornecedor') }}
+                                                    </x-menu-link>
+                                            
+                                                    <x-menu-link :href="route('requisicao.create')">
+                                                        {{ __('Novo Contratação') }}
+                                                    </x-menu-link>
+                                                    <ul>
+                                                </x-slot>
+                                            </x-menu-submenu>
+                                        </li>
+                                        <li class=" relative">
+                                            <x-menu-link>
+                                                {{ __('Links Importantes') }}
+                                            </x-menu-link>
+                                        </li>
+                                    </ul>
+                                </x-slot>
+                            </x-menu>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
@@ -35,7 +197,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Perfil') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -45,7 +207,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Sair') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -81,7 +243,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('Perfil') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -91,7 +253,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Sair') }}
                     </x-responsive-nav-link>
                 </form>
             </div>
