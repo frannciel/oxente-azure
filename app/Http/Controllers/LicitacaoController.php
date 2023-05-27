@@ -55,9 +55,7 @@ class LicitacaoController extends Controller
         ]; 
 
         $return  = $this->breadcrumbService->generateWithParam('requisicao.import', $parameters);
-        $breadcrumbs =  $return['data'];
-
-        return view('agenteContratacao.dashboard', compact('breadcrumbs'));
+        return view('agenteContratacao.home', ['breadcrumbs'=> $return['data']]);
     }
 
     /**

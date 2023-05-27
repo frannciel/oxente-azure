@@ -2,22 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Services\BreadcrumbService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
+
+    protected $breadcrumbService;
+    /**
+     * method constructor .   
+     */
+    public function __construct(BreadcrumbService $breadcrumbService)
+    {
+        $this->breadcrumbService = $breadcrumbService;
+    }
     /**
      * Display the user's profile form.
      */
     public function edit(Request $request): View
     {
+        $return  = $this->breadcrumbService->generate('profile.edit'); // generate breascrum
         return view('profile.edit', [
             'user' => $request->user(),
+            'breadcrumbs' =>  $return['data']
         ]);
     }
 

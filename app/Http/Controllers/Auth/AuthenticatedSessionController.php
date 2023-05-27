@@ -2,16 +2,26 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Services\BreadcrumbService;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Auth\LoginRequest;
 
 class AuthenticatedSessionController extends Controller
 {
+    protected $breadcrumbService;
+    /**
+     * method constructor .   
+     */
+    public function __construct(BreadcrumbService $breadcrumbService)
+    {
+        $this->breadcrumbService = $breadcrumbService;
+    }
+
     /**
      * Display the login view.
      */
@@ -26,15 +36,10 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
+        
         $request->session()->regenerate();
-
-        if(Auth::user()->profile ==  '0'){
-            return redirect()->route('requisitante.dashboard');
-        }else if(Auth::user()->profile ==  '1'){
-            return redirect()->route('agente.dashboard');
-        }
-        //return redirect()->intended(RouteServiceProvider::HOME);
+ 
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**
@@ -49,5 +54,21 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    /**
+     * Redireciona o usuário para a pagina incial de acordo com seu perfil
+     *
+     * @return View
+     * 
+     */
+    public function homeProfile(): View
+    {
+        $return  = $this->breadcrumbService->generate('profile.home'); // generate breabcrumb
+        if(Auth::user()->profile ==  '0'){
+            return view('requisitante.home')->with(['breadcrumbs' =>  $return['data']]);
+        }else if(Auth::user()->profile ==  '1'){
+            return view('agenteContratacao.home')->with(['breadcrumbs' =>  $return['data']]);
+        }
     }
 }

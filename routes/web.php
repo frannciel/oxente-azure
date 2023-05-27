@@ -1,10 +1,12 @@
 <?php
 
-use App\Models\Breadcrumb;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LicitacaoController;
 use App\Http\Controllers\RequisicaoController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,21 +19,7 @@ use App\Http\Controllers\RequisicaoController;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
-
-Route::get('/dashboard', function () {
-    return view('agenteContratacao.dashboard');
-})->middleware('auth')->name('dashboard');
-
-Route::get('/dashboard/agentedecontratacao', function () {
-    return view('agenteContratacao.dashboard');
-})->middleware('auth')->name('agente.dashboard');
-
-Route::get('/dashboard/requisitante', function () {
-    return view('requisitante.dashboard');
-})->middleware(['auth'])->name('requisitante.dashboard');
+Route::get('/', [AuthenticatedSessionController::class, 'homeProfile'])->middleware('auth')->name('profile.home');
 
 
 Route::middleware('auth')->group(function () {
@@ -39,8 +27,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
 
 Route::middleware(['auth'])->group(function(){
     Route::controller(LicitacaoController::class)->prefix('licitacao')->name('licitacao.')->group(function(){
