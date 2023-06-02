@@ -4,20 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use YourAppRocks\EloquentUuid\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class UnidadeAdministrativa extends Model
+class PessoaFisica extends Model
 {
     use HasFactory, HasUuid;
 
+    protected $table = 'pessoas_fisicas';
+    protected $fillable = ['cpf', 'nome'];
 
-     /**
-     * Get the a unidade administrativa tem muitos usuásrio 
-     */
-    public function users(): HasMany
+    public $timestamps = false;
+    
+    public function fornecedor():MorphOne
     {
-        return $this->hasMany(User::class);
+        return $this->morphOne(Fornecedor::class, 'fornecedorable');
     }
 
     /**

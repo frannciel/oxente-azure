@@ -7,17 +7,23 @@ use YourAppRocks\EloquentUuid\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class UnidadeAdministrativa extends Model
+class Grupo extends Model
 {
     use HasFactory, HasUuid;
 
+    protected $fillable = [
+        'numero', 'descricao'
+    ];
 
-     /**
-     * Get the a unidade administrativa tem muitos usuásrio 
+    /**
+     * Relaciomannto muitos para um com itens
+     *
+     * @return HasMany
+     * 
      */
-    public function users(): HasMany
+    public function itens(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Item::class);
     }
 
     /**
@@ -26,8 +32,9 @@ class UnidadeAdministrativa extends Model
      *
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'uuid';
     }
+
 }

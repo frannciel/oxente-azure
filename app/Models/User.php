@@ -3,15 +3,20 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use YourAppRocks\EloquentUuid\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use YourAppRocks\EloquentUuid\Traits\HasUuid;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasUuid;
+
+    protected $uuidColumnName = 'uuid';
 
     /**
      * The attributes that are mass assignable.
@@ -45,17 +50,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the route key for the model. 
-     * Método para definir a chave usada na injeção de dependêcia dos model através das rotas
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return 'uuid';
-    }
-
-    /**
      * Relação muito para muitos para um de requisitente com usuários,
      *  onde o usuário representa a entidade muitos
      * 
@@ -73,6 +67,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Administrador::class);
     }
+
+    public function post(): BelongsTo
+    {
+        return $this->belongsTo(Requisicao::class);
+    }
     
     /**
      * Relacionamento one to one entre usuário definido como agente de contratação
@@ -84,9 +83,37 @@ class User extends Authenticatable
         
     /**
      * Relacionamento one to one entre usuário definido como agente de contratação
+     * Requisitante é o servidor que requisita compra
      */
     public function requisitante(): HasOne
     {
         return $this->hasOne(Requisitante::class);
+    }
+
+    /**
+    * Retorna todos os e-mails relacioando ao usuário
+     */
+    public function emails(): HasMany
+    {
+        return $this->hasMany(Email::class);
+    }
+
+    /**
+     * Retorna todos os telefones relacioando ao usuário
+     */
+    public function telefones(): HasMany
+    {
+        return $this->hasMany(Telefone::class);
+    }
+
+    /**
+     * Get the route key for the model. 
+     * Método para definir a chave usada na injeção de dependêcia dos model através das rotas
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
     }
 }
