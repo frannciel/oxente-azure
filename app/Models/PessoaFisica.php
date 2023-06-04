@@ -13,7 +13,6 @@ class PessoaFisica extends Model
 
     protected $table = 'pessoas_fisicas';
     protected $fillable = ['cpf', 'nome'];
-
     public $timestamps = false;
     
     public function fornecedor():MorphOne

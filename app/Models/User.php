@@ -9,6 +9,7 @@ use YourAppRocks\EloquentUuid\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -91,19 +92,19 @@ class User extends Authenticatable
     }
 
     /**
-    * Retorna todos os e-mails relacioando ao usuário
+     * Retorna todos os e-mails relacioando ao usuário
      */
-    public function emails(): HasMany
+    public function emails(): MorphMany
     {
-        return $this->hasMany(Email::class);
+        return $this->morphMany(Email::class, 'emailable');
     }
 
     /**
      * Retorna todos os telefones relacioando ao usuário
      */
-    public function telefones(): HasMany
+    public function telefones(): MorphMany
     {
-        return $this->hasMany(Telefone::class);
+        return $this->morphMany(Telefone::class, 'telefoneable');
     }
 
     /**

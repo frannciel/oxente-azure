@@ -13,9 +13,7 @@ class RegistroDePreco extends Model
 {
     use HasFactory, HasUuid, DateTrait;
 
-    protected $table = 'registro_precos';
-    public $timestamps = true;
-
+    protected $table = 'registros_precos';
     protected $fillable = [
         'numero', 'ano', 'assinatura','vigencia_inicio', 'vigencia_fim', 'licitacao_id', 'fornecedor_id', 
     ];

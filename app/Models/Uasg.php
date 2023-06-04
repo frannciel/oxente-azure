@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use YourAppRocks\EloquentUuid\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -12,7 +13,7 @@ class Uasg extends Model
 {
     use HasFactory, HasUuid;
 	protected $table = 'uasgs';
-    protected $fillable = [ 'nome', 'codigo', 'email', 'telefone', 'cidade_id'];
+    protected $fillable = [ 'nome', 'codigo', 'cidade_id'];
     
     public function cidades():BelongsToMany
     {
@@ -32,14 +33,20 @@ class Uasg extends Model
             ->withTimestamps();
     }
 
-    public function telefones(): HasMany
+    /**
+     * Retorna todos os e-mails relacioando à uasg.
+     */
+    public function emails(): MorphMany
     {
-        return $this->hasMany(Telefone::class);
+        return $this->morphMany(Email::class, 'emailable');
     }
 
-    public function emails(): HasMany
+    /**
+     * Retorna todos os telefones relacioando à uasg.
+     */
+    public function telefones(): MorphMany
     {
-        return $this->hasMany(Email::class);
+        return $this->morphMany(Telefone::class, 'telefoneable');
     }
 
     /**
@@ -47,8 +54,8 @@ class Uasg extends Model
      *
      * @return     <Objeto>  ( Cidade )
      */
-    public function cidade()
+    public function cidade():BelongsTo
     {
-        return $this->belongsTo(Cidade::class, 'cidade_id', 'id');
+        return $this->belongsTo(Cidade::class, 'cidade_id');
     }
 }

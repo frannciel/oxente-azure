@@ -13,7 +13,7 @@ class Estado extends Model
     use HasFactory, HasUuid;
    	protected $table = 'estados';
 
-	protected $fillable = ['nome', 'sigla' ];
+	protected $fillable = ['codigo_ibge', 'nome', 'sigla' ];
 
     /**
      * Get the route key for the model. 

@@ -2,69 +2,37 @@
 
 namespace App\Models;
 
+use App\Models\Item;
+use App\Models\Contratacao;
 use Illuminate\Database\Eloquent\Model;
 use YourAppRocks\EloquentUuid\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Licitacao extends Model
+class Procedimento extends Model
 {
     use HasFactory, HasUuid;
-    protected $table = 'licitacoes';
+    protected $table = 'procedimentos';
     protected $fillable = [
-        'uasg_id', 'numero', 'ano', 'objeto', 'processo', 'data_publicacao',
+        'uasg_id', 'numero', 'ano', 'objeto', 'processo', 'data_publicacao'
     ];
 
-    public function licitacaoable(): MorphTo
+    public function procedimentoable(): MorphTo
     {
         return $this->morphTo();
     }
 
     public function itens():BelongsToMany
     {
-        return $this->belongsToMany(Item::class, 'item_licitacao', 'licitacao_id', 'item_id')
+        return $this->belongsToMany(Item::class, 'item_procedimento', 'procedimento_id', 'item_id')
             ->withPivot('ordem')
             ->withTimestamps();
     }
-    /*
-    public function requisicoes():BelongsToMany
-    {
-        return $this->belongsToMany(Requisicao::class, 'licitacao_requisicao')
-            ->withTimestamps();
-    }*/
-
     public function contratacoes(): HasMany
     {
         return $this->hasMany(Contratacao::class);
-    }
-
-    public function registroDePrecos():HasMany
-    {
-        return $this->hasMany(RegistroDePreco::class);
-    }
-
-	/**
-	 * Retorna um objeto uasg na relação ternária Item Cidade Uasg
-	 *
-	 * @return  Uasg
-	 */
-	public function uasg():BelongsTo
-	{
-		return $this->belongsTo(Uasg::class, 'uasg_id');
-	}
-
-    /**
-     * Metodo que retorna a collection de itens mesclados da licitação
-     *
-     * @return  Collection  $item
-     */
-    public function mesclados(): BelongsToMany
-    {
-        return $this->belongsToMany(Item::class, 'mesclados', 'licitacao_id', 'mesclado_id')
-            ->withPivot('item_id');
     }
 
     protected function getOrdemAttribute():string
@@ -87,12 +55,12 @@ class Licitacao extends Model
 
     protected function getPublicacaoAttribute():string
     {
-        return date('d/m/Y', strtotime($this->attributes['publicacao']));
+        return date('d/m/Y', strtotime($this->attributes['data_publicacao']));
     }
 
     protected function setPublicacaoAttribute($value)
     {
-        $this->attributes['publicacao'] = date_format(date_create(str_replace("/", "-", $value)), 'Y-m-d');
+        $this->attributes['data_publicacao'] = date_format(date_create(str_replace("/", "-", $value)), 'Y-m-d');
     }
 
     /**
@@ -105,4 +73,5 @@ class Licitacao extends Model
     {
         return 'uuid';
     }
+
 }

@@ -12,13 +12,15 @@ class PessoaJuridica extends Model
     use HasFactory, HasUuid;
 
     protected $table = 'pessoas_juridicas';
-
-    protected $fillable = [
-        'cnpj', 'razao_social', 'representante_nome'
-    ];
-
     public $timestamps = false;
-    
+    protected $fillable = ['cnpj', 'razao_social', 'nome_representante'];
+
+    /**
+     * [Description for fornecedor]
+     *
+     * @return MorphOne
+     * 
+     */
     public function fornecedor():MorphOne
     {
         return $this->morphOne(Fornecedor::class, 'fornecedorable');

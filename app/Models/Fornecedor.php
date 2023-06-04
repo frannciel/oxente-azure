@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use YourAppRocks\EloquentUuid\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Fornecedor extends Model
@@ -18,22 +19,6 @@ class Fornecedor extends Model
     ];
 
     /**
-     * Retorna todos os e-mails relacioando ao fornecedor
-     */
-    public function emails(): HasMany
-    {
-        return $this->hasMany(Email::class);
-    }
-
-    /**
-     * Retorna todos os telefones relacioando ao fornecedor
-     */
-    public function telefones(): HasMany
-    {
-        return $this->hasMany(Telefone::class);
-    }
-
-    /**
      * Relacionamento com as classes Pessoa Física e Pessoa Jurídica
      *
      * @return MorphTo
@@ -43,8 +28,32 @@ class Fornecedor extends Model
     {
         return $this->morphTo();
     }
+    
+    /**
+     * Retorna todos os e-mails relacioando ao fornecedor
+     */
+    public function emails(): MorphMany
+    {
+        return $this->morphMany(Email::class, 'emailable');
+    }
 
+    /**
+     * Retorna todos os telefones relacioando ao fornecedor
+     */
+    public function telefones(): MorphMany
+    {
+        return $this->morphMany(Telefone::class, 'telefoneable');
+    }
 
+    /**
+     *  Método que retorna a cidade sede da fornecedor
+     *
+     * @return $cidade 
+     */
+    public function cidade():BelongsTo
+    {
+        return $this->belongsTo(Cidade::class, 'cidade_id');
+    }
     /**
      * Retorna o nome ou a razão social do fornecedor
      *
