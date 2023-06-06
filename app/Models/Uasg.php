@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use YourAppRocks\EloquentUuid\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,9 +16,19 @@ class Uasg extends Model
 	protected $table = 'uasgs';
     protected $fillable = [ 'nome', 'codigo', 'cidade_id'];
     
+    public function unidadesAdministrativas(): HasMany
+    {
+        return $this->hasMany(Item::class);
+    }
+
+    public function cidade():BelongsTo
+    {
+        return $this->belongsTo(Cidade::class, 'cidade_id');
+    }
+
     public function cidades():BelongsToMany
     {
-        return $this->belongsToMany(Cidade::class, 'cidade_uasg', 'uasg_id', 'cidade_id')
+        return $this->belongsToMany(Cidade::class, 'cidade_item_uasg', 'uasg_id', 'cidade_id')
             ->using(Participante::class)
             ->withPivot('item_id')
             ->withPivot('quantidade')
@@ -47,15 +58,5 @@ class Uasg extends Model
     public function telefones(): MorphMany
     {
         return $this->morphMany(Telefone::class, 'telefoneable');
-    }
-
-    /**
-     *  Método que retorna a cidade sede da uasg
-     *
-     * @return     <Objeto>  ( Cidade )
-     */
-    public function cidade():BelongsTo
-    {
-        return $this->belongsTo(Cidade::class, 'cidade_id');
     }
 }

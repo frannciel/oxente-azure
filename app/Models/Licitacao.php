@@ -46,11 +46,6 @@ class Licitacao extends Model
         return $this->hasMany(RegistroDePreco::class);
     }
 
-	/**
-	 * Retorna um objeto uasg na relação ternária Item Cidade Uasg
-	 *
-	 * @return  Uasg
-	 */
 	public function uasg():BelongsTo
 	{
 		return $this->belongsTo(Uasg::class, 'uasg_id');

@@ -43,7 +43,7 @@ class Cidade extends Model
      */
     public function participantes():BelongsToMany
     {
-        return $this->belongsToMany(Uasg::class, 'cidade_uasg','cidade_id', 'uasg_id')
+        return $this->belongsToMany(Uasg::class, 'cidade_item_uasg','cidade_id', 'uasg_id')
             ->using(Participante::class)
             ->withPivot('item_id')
             ->withPivot('quantidade')

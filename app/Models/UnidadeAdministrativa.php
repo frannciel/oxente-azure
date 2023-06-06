@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use YourAppRocks\EloquentUuid\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -14,8 +15,13 @@ class UnidadeAdministrativa extends Model
     protected $table = 'unidades_administrativas';
 
     protected $fillable = [
-        'nome', 'sigla'
+        'nome', 'sigla', 'uasg_id'
     ];
+
+    public function uasg():BelongsTo
+	{
+		return $this->belongsTo(Uasg::class, 'uasg_id');
+	}
 
      /**
      * Get the a unidade administrativa tem muitos usuásrio 

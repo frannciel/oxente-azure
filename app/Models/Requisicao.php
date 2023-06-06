@@ -15,7 +15,9 @@ class Requisicao extends Model
     use HasFactory, HasUuid, DateTrait;
     protected $table = 'requisicoes';
     protected $fillable = [
-        'numero', 'ano', 'descricao', 'tipo', 'prioridade', 'renovacao','pac', 'capacitacao', 'previsao', 'metas', 'justificativa', 'user_id','unidadeAdministrativa_id'
+        'numero', 'ano', 'descricao', 'classificacao', 'prioridade',
+        'dfd_ano', 'dfd_numero', 'capacitacao', 'previsao',
+        'justificativa', 'user_id','unidadeAdministrativa_id'
     ];
 
     public function itens(): HasMany

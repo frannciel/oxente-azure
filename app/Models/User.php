@@ -17,18 +17,12 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasUuid;
 
-    protected $uuidColumnName = 'uuid';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
         'profile',
+        'unidade_administrativas_id'
     ];
 
     /**

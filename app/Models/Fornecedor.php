@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Fornecedor extends Model
 {
@@ -35,6 +36,14 @@ class Fornecedor extends Model
     public function emails(): MorphMany
     {
         return $this->morphMany(Email::class, 'emailable');
+    }
+
+    public function itens():BelongsToMany
+    {
+        return $this->belongsToMany(Item::class, 'fornecedor_item', 'item_id', 'fornecedor_id')
+            ->withPivot('licitacao_id')
+            ->withPivot('quantidade', 'valor', 'marca', 'modelo' )
+            ->withTimestamps();
     }
 
     /**

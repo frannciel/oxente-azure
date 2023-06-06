@@ -36,7 +36,16 @@ class Item extends Model
     public function licitacoes(): BelongsToMany
     {
         return $this->belongsToMany(Licitacao::class, 'item_licitacao', 'item_id', 'licitacao_id')
-            ->withPivot('ordem');
+            ->withPivot('ordem')
+            ->withTimestamps();
+    }
+
+    public function fornecedores():BelongsToMany
+    {
+        return $this->belongsToMany(Fornecedor::class, 'fornecedor_item', 'item_id', 'fornecedor_id')
+            ->withPivot('licitacao_id')
+            ->withPivot('quantidade', 'valor', 'marca', 'modelo' )
+            ->withTimestamps();
     }
 
     public function cotacoes(): HasMany
@@ -59,6 +68,34 @@ class Item extends Model
     {
         return $this->belongsToMany(Contratacao::class, 'contratacao_item', 'contratacao_id', 'item_id')
             ->withPivot(['quantidade', 'valor', 'fornecedor_id']);
+    }
+
+    /**
+     * @Descrition Método que retorna as Uasg que são participantes do item.
+     * 
+     * @return <Collect> App\Uasg
+     */
+    public function participantes()
+    {
+        return $this->belongsToMany(Uasg::class, 'cidade_item_uasg', 'item_id', 'uasg_id')
+            ->using(Participante::class)
+            ->withPivot('cidade_id')
+            ->withPivot('quantidade')
+            ->withTimestamps();
+    }
+
+    /**
+     * @Descrition Método que retorna as cidades onde os itens deverão ser entregues. 
+     * Estás cidades estão relacionadas as unidades participantes e o ógão gereciador.
+     * 
+     * @return <Collect> App\Cidade
+     */
+    public function localEntrega(){
+        return $this->belongsToMany(Cidade::class, 'cidade_item_uasg', 'item_id', 'cidade_id')
+            ->using(Participante::class)
+            ->withPivot('uasg_id')
+            ->withPivot('quantidade')
+            ->withTimestamps();
     }
 
     /**
