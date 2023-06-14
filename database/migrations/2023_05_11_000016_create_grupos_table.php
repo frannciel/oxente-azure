@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('unidade_administrativas', function (Blueprint $table) {
+        Schema::create('grupos', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
+            $table->smallInteger('numero');
+            $table->string('descricao', 150)->nullable();
             $table->timestamps();
         });
     }
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('unidade_administrativas');
+        Schema::dropIfExists('grupos');
     }
 };
