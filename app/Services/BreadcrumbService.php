@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Exception;
 use App\Models\Breadcrumb;
 
 class BreadcrumbService
@@ -9,19 +10,25 @@ class BreadcrumbService
     protected $breadcrumbs;
 
     /**
-     * [Description for generate]
+     * Constroi coleção de rotas do breadcrumb, quanto não existe parâmetro nas rotas
      *
      * @param string $route
-     * 
      * @return Colletions $breadcrumbs
-     * 
      */
     public function generate(string $route)
     {
+        $breadcrumb = Breadcrumb::where('route_name', $route)->first();  
+        if($breadcrumb === null)
+            abort(
+                redirect()->route('profile.home')
+                ->with(['situacao' => false, 'mensagem' => 'Rota não encontrada na base de dados de migalhas'])
+            ); 
+ 
         try
         {
+            
             $this->breadcrumbs = collect();
-            $this->build($route);
+            $this->build($breadcrumb);
 
             return [
                 'status' => true,
@@ -38,13 +45,11 @@ class BreadcrumbService
     }
 
     /**
-     * [Description for generateWithParam]
-     *
+     * Constroi a coleção de rotas do breadcrumb, quando pelo menos uma rota possui algum parâmetro
+     * 
      * @param string $route
      * @param array $parameters
-     * 
      * @return Colletions $breadcrumbs
-     * 
      */
     public function generateWithParam(string $route, array $parameters)
     {
@@ -67,25 +72,23 @@ class BreadcrumbService
         }
     }
 
-    protected function build (string $route)
-    {
-        $breadcrumb = Breadcrumb::where('route_name', $route)->first();
+    protected function build (Breadcrumb $breadcrumb)
+    {    
         $this->breadcrumbs->prepend(collect([
             'title' =>  $breadcrumb->title, 
             'url' => route($breadcrumb->route_name)
         ])); // add collect breadcrumb node
         if( $breadcrumb->father != null)
-            $this->build($breadcrumb->father->route_name);
+            $this->build($breadcrumb->father);
     }
 
     protected function buildParam (string $route, array $parameters)
     {
         $breadcrumb = Breadcrumb::where('route_name', $route)->first();
-        $url;   
-        $title = $breadcrumb->title;
+        $url = null;   
+        $title = null; 
 
         if ($breadcrumb->has_parameters) {
-            
             if(isset($parameters[$route]['parameters'])){
                 $url = route($breadcrumb->route_name, $parameters[$route]['parameters']);
             } else{
