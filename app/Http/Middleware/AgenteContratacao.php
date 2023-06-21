@@ -15,7 +15,7 @@ class AgenteContratacao
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user()->profile == 2){ 
+        if(auth()->user()->profile == 1){ 
             return $next($request);
         }
         return back()->with('error','Acesso negado você não é um Agente de Contratação');
