@@ -29,8 +29,9 @@ class LicitacaoController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        //
+    {   
+        $return  = $this->breadcrumbService->generate('fornecedor.create');
+        return view('agenteContratacao.fornecedor.create', ['breadcrumbs'=> $return['data']]);
     }
 
     /**
